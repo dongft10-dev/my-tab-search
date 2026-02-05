@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pinyin Test</title>
+</head>
+<body>
+    <h1>拼音测试页面</h1>
+    <input type="text" id="testInput" placeholder="输入中文标题">
+    <button onclick="testPinyin()">测试拼音</button>
+    <div id="result"></div>
+
+    <script src="./js/pinyin.min.js"></script>
+    <script>
+        function testPinyin() {
+            const input = document.getElementById('testInput').value;
+            const result = getPinyinFirstLetters(input);
+            document.getElementById('result').innerHTML = `
+                <p>输入: ${input}</p>
+                <p>拼音首字母: ${result}</p>
+            `;
+            
+            // 测试一些预设的例子
+            console.log('测试 "百度搜索":', getPinyinFirstLetters('百度搜索'));
+            console.log('测试 "淘宝购物":', getPinyinFirstLetters('淘宝购物'));
+            console.log('测试 "微信聊天":', getPinyinFirstLetters('微信聊天'));
+            console.log('测试 "Chrome扩展":', getPinyinFirstLetters('Chrome扩展'));
+        }
+        
+        // 页面加载完成后执行一些测试
+        window.onload = function() {
+            console.log('测试 "上线记录":', getPinyinFirstLetters('上线记录'));
+            console.log('测试 "天猫商家":', getPinyinFirstLetters('天猫商家'));
+            console.log('测试 "小象班班":', getPinyinFirstLetters('小象班班'));
+        };
+    </script>
+</body>
+</html>
