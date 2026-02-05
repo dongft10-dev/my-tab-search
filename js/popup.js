@@ -1,6 +1,22 @@
 // Import i18n manager
 import i18n from './i18n.js';
 
+// 检查字符串是否只包含英文字母
+function isPureEnglish(str) {
+  return /^[a-zA-Z]+$/.test(str);
+}
+
+// 获取中文文本的拼音首字母 - 使用我们自己的pinyin库
+function getFirstPinyinLetters(text) {
+  if (typeof getPinyinFirstLetters !== 'undefined') {
+    return getPinyinFirstLetters(text);
+  } else {
+    // 如果全局函数不可用，返回空字符串
+    console.warn('Pinyin library not loaded, falling back to basic filtering');
+    return '';
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
 
   const searchInput = document.getElementById("search-input");
@@ -17,20 +33,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 焦点默认定位到搜索输入框
   searchInput.focus();
 
-  // Function to update the displayed tabs based on search input
+  // Function to update displayed tabs based on search input
   function updateTabs(nextSelectedTabId) {
     const query = searchInput.value.trim().toLowerCase();
-    
+
     chrome.tabs.query({}, (tabs) => {
       let filteredTabs;
-      
+
       if (!query) {
         // 如果查询为空，则返回所有标签页
         filteredTabs = tabs;
       } else {
         // 按空格分割查询字符串，得到多个关键字
         const keywords = query.split(/\s+/).filter(kw => kw.length > 0);
-        
+
         if (keywords.length === 0) {
           // 如果没有有效关键字，则返回所有标签页
           filteredTabs = tabs;
@@ -40,6 +56,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             const lowerTitle = tab.title.toLowerCase();
             return keywords.every(keyword => lowerTitle.includes(keyword));
           });
+
+          // 如果没有匹配结果，尝试拼音首字母匹配
+          if (filteredTabs.length === 0 && keywords.every(isPureEnglish)) {
+            filteredTabs = tabs.filter((tab) => {
+              const pinyinLetters = getFirstPinyinLetters(tab.title).toLowerCase();
+              return keywords.every(keyword =>
+                pinyinLetters.includes(keyword.toLowerCase())
+              );
+            });
+          }
         }
       }
 
@@ -49,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // tabList index
       let i = 0;
 
-      // populate the tab list with the filtered tabs
+      // populate the tab list with filtered tabs
       filteredTabs.forEach((tab) => {
         try {
           const li = document.createElement("li");
@@ -101,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             closeBtn.textContent = "";
           });
 
-          // add click event to switch to the selected tab
+          // add click event to switch to selected tab
           li.addEventListener("click", function () {
             chrome.tabs.get(tab.id, (tab) => {
               if (chrome.runtime.lastError) {
@@ -146,7 +172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // 已打开标签总数展示控制
       if (query.length === 0) {
-        chrome.tabs.query({windowType: 'normal'}, function (tabs) {
+        chrome.tabs.query({ windowType: 'normal' }, function (tabs) {
           const message = i18n.getMessage('tabsCount', tabs.length.toString());
           tabsCount.textContent = message ? message.replace('$COUNT$', tabs.length) : `${tabs.length} Tabs`;
         });
@@ -229,14 +255,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
     const selectedItem = lis[selectedIndex];
-    
+
     if (!selectedItem) {
       return;
     }
-    
+
     // behavior参数控制是否平滑滚动
     const scrollBehavior = behavior === undefined ? 'smooth' : behavior;
-    
+
     // 使用Element.scrollIntoView()方法，这是一个更可靠的方法。确保元素滚动到可视区域
     selectedItem.scrollIntoView({
       block: 'nearest',  // 只在必要时滚动，尽量保持元素在视图内
@@ -278,25 +304,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize i18n
   await i18n.initialize();
-  
+
   // Set initial loading text with i18n
   tabsCount.textContent = i18n.getMessage('loadingText') || 'Loading...';
-  
+
   // initial tab update
   updateTabs();
-  
+
   // Set up i18n after DOM is loaded
   setupI18n();
-  
+
   // event listener for search input changes
   searchInput.addEventListener("input", updateTabs);
-  
+
   // Add language change listener
   i18n.addListener(() => {
     setupI18n();
     updateTabs();
   });
-  
+
   // Listen for language change messages from other parts
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'languageChanged') {

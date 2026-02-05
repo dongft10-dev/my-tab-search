@@ -29,7 +29,8 @@
         "html/settings.html",
         "js/about.js",
         "js/settings.js",
-        "js/i18n.js"
+        "js/i18n.js",
+        "js/pinyin.min.js"
       ],
       "matches": [
         "<all_urls>"
