@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>修复后拼音测试</title>
+</head>
+<body>
+    <h1>测试修复后的拼音功能</h1>
+    <div id="results"></div>
+
+    <script src="./js/pinyin.min.js"></script>
+    <script>
+        function testPinyin(text) {
+            const result = getPinyinFirstLetters(text);
+            return result;
+        }
+
+        // 测试各种组合
+        const tests = [
+            "上线记录",
+            "天猫商家及商品关联数据配置", 
+            "小象班班",
+            "百度搜索",
+            "淘宝购物"
+        ];
+        
+        let html = '<h2>测试结果:</h2>';
+        
+        tests.forEach(test => {
+            const pinyin = testPinyin(test);
+            html += `<p><strong>${test}</strong> -> <em>${pinyin}</em></p>`;
+        });
+        
+        // 特别测试用户提到的情况
+        html += '<h2>特定测试:</h2>';
+        const shangxianjilu = testPinyin("上线记录");
+        html += `<p><strong>上线记录</strong> -> <em>${shangxianjilu}</em> (期望: sxjl)</p>`;
+        html += `<p>"sxjl".includes("${shangxianjilu}") = ${"sxjl".includes(shangxianjilu)}</p>`;
+        
+        document.getElementById('results').innerHTML = html;
+        
+        console.log("上线记录的拼音首字母:", testPinyin("上线记录"));
+    </script>
+</body>
+</html>

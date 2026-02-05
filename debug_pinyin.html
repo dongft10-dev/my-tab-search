@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试上线记录拼音</title>
+</head>
+<body>
+    <h1>测试 "上线记录" 的拼音首字母</h1>
+    <div id="result"></div>
+
+    <script src="./js/pinyin.min.js"></script>
+    <script>
+        // 测试 "上线记录"
+        const text = "上线记录";
+        const result = getPinyinFirstLetters(text);
+        document.getElementById('result').innerHTML = `
+            <p>输入: ${text}</p>
+            <p>拼音首字母: ${result}</p>
+            <p>期望: sxjl</p>
+            <p>匹配测试: "sxjl".includes("${result}") = ${"sxjl".includes(result)}</p>
+        `;
+        
+        // 测试各个单字
+        console.log('上:', getPinyinFirstLetters('上'));
+        console.log('线:', getPinyinFirstLetters('线'));
+        console.log('记:', getPinyinFirstLetters('记'));
+        console.log('录:', getPinyinFirstLetters('录'));
+        console.log('上线记录整体:', result);
+    </script>
+</body>
+</html>
