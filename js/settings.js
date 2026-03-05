@@ -35,7 +35,8 @@ const elements = {
   languageSelect: document.getElementById('language-select'),
   searchMatchModeSelect: document.getElementById('search-match-mode'),
   appVersion: document.getElementById('app-version'),
-  statusMessage: document.getElementById('status-message')
+  statusMessage: document.getElementById('status-message'),
+  themeToggle: document.getElementById('theme-toggle')
 };
 
 // 初始化
@@ -52,12 +53,46 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 加载设置
   await loadSettings();
   
+  // 初始化主题
+  initializeTheme();
+  
   // 设置事件监听
   setupEventListeners();
   
   // Add language change listener
   i18n.addListener(applyI18n);
 });
+
+// 初始化主题
+function initializeTheme() {
+  // 从本地存储获取主题设置，默认使用明亮主题
+  chrome.storage.local.get('theme', (result) => {
+    const theme = result.theme || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeToggleIcon(theme);
+  });
+}
+
+// 更新主题切换按钮图标
+function updateThemeToggleIcon(theme) {
+  if (elements.themeToggle) {
+    elements.themeToggle.innerHTML = theme === 'light' ? 
+      '<i class="fas fa-moon"></i>' : 
+      '<i class="fas fa-sun"></i>';
+  }
+}
+
+// 切换主题
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  updateThemeToggleIcon(newTheme);
+  
+  // 保存主题设置到本地存储
+  chrome.storage.local.set({ theme: newTheme });
+}
 
 function applyI18n() {
   // Update page title
@@ -407,6 +442,10 @@ function setupEventListeners() {
   
   if (elements.btnExtendTrial) {
     elements.btnExtendTrial.addEventListener('click', handleExtendTrial);
+  }
+  
+  if (elements.themeToggle) {
+    elements.themeToggle.addEventListener('click', toggleTheme);
   }
   
   const saveButton = document.getElementById('save-settings');

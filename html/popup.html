@@ -4,11 +4,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../css/popup.css" />
   <title>my-tab-search</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      --accent: #14b8a6;
+      --dark: #0f0f1a;
+      --darker: #080810;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-bg-solid: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --bg-primary: transparent;
+      --bg-secondary: transparent;
+      --bg-tertiary: transparent;
+      --card-bg: var(--glass-bg);
+      --card-bg-solid: transparent;
+      --header-bg: rgba(8, 8, 16, 0.7);
+      --footer-bg: rgba(8, 8, 16, 0.8);
+    }
+
+    /* Glassmorphism Light Theme - Vibrant Pastel Aurora */
+    [data-theme="light"] {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      
+      /* Enhanced glass effect with stronger blur */
+      --glass-bg: rgba(255, 255, 255, 0.35);
+      --glass-bg-solid: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+      
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      
+      /* Soft aurora background */
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --bg-tertiary: #eeeeee;
+      --card-bg: rgba(255, 255, 255, 0.5);
+      --card-bg-solid: rgba(255, 255, 255, 0.7);
+      --header-bg: rgba(255, 255, 255, 0.7);
+      --footer-bg: rgba(255, 255, 255, 0.8);
+    }
+  </style>
 </head>
 
-<body>
+<body data-theme="light">
   <div class="search-container">
     <img id="magnifying-glass" src="../images/magnifying-glass.png" alt data-i18n="search" />
     <input id="search-input" aria-label="search opened tabs" type="text" placeholder="search opened tabs...">
@@ -18,7 +69,7 @@
     <ul id="tab-list"></ul>
   </div>
   
-  <!-- Button bar with pinned tabs, settings and about icons -->
+  <!-- Button bar with pinned tabs, settings, about and theme toggle icons -->
   <div class="button-bar">
     <button id="pinned-tabs-btn" class="icon-btn" title="Pinned Tab List">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -36,6 +87,9 @@
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
       </svg>
+    </button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle theme">
+      <i class="fas fa-sun"></i>
     </button>
   </div>
   

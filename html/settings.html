@@ -4,10 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="settingsTitle">设置 - MyTabSearch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../css/settings.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      --accent: #14b8a6;
+      --dark: #0f0f1a;
+      --darker: #080810;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-bg-solid: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --bg-primary: transparent;
+      --bg-secondary: transparent;
+      --bg-tertiary: transparent;
+      --card-bg: var(--glass-bg);
+      --card-bg-solid: transparent;
+      --header-bg: rgba(8, 8, 16, 0.7);
+      --footer-bg: rgba(8, 8, 16, 0.8);
+    }
+
+    /* Glassmorphism Light Theme - Vibrant Pastel Aurora */
+    [data-theme="light"] {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      
+      /* Enhanced glass effect with stronger blur */
+      --glass-bg: rgba(255, 255, 255, 0.35);
+      --glass-bg-solid: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+      
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      
+      /* Soft aurora background */
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-tertiary: #e2e8f0;
+      --card-bg: rgba(255, 255, 255, 0.5);
+      --card-bg-solid: rgba(255, 255, 255, 0.7);
+      --header-bg: rgba(248, 250, 252, 0.7);
+      --footer-bg: rgba(241, 245, 249, 0.8);
+    }
+  </style>
 </head>
-<body>
+<body data-theme="light">
   <div class="settings-container">
+    <!-- 主题切换按钮 -->
+    <div class="theme-toggle-container" style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+      <button id="theme-toggle" class="icon-btn" title="Toggle theme" style="background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 8px; padding: 8px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease;">
+        <i class="fas fa-sun"></i>
+      </button>
+    </div>
     <!-- 账户信息区域 -->
     <section class="settings-section" id="account-section">
       <h2 data-i18n="accountInfoTitle">账户信息</h2>

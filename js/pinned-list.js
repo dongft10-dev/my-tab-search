@@ -985,3 +985,44 @@ async function cancelLongTermPinned(tabId) {
 
 // 初始化
 initialize().catch(console.error);
+
+// 主题切换功能
+function setupThemeToggle() {
+  // 主题切换按钮点击事件
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      
+      // 更新主题图标
+      const icon = themeToggleBtn.querySelector('i');
+      if (icon) {
+        icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+      }
+      
+      // 保存主题偏好到本地存储
+      chrome.storage.local.set({ theme: newTheme });
+    });
+  }
+
+  // 加载保存的主题偏好
+  chrome.storage.local.get('theme', (result) => {
+    const savedTheme = result.theme || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    
+    // 更新主题图标
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+      const icon = themeToggleBtn.querySelector('i');
+      if (icon) {
+        icon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+      }
+    }
+  });
+}
+
+// 初始化主题切换
+setupThemeToggle();

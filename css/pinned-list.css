@@ -2,23 +2,33 @@ body {
   min-width: 400px;
   max-width: 400px;
   width: 100%;
-  height: auto; /* 让高度自适应内容，但在限制范围内 */
+  height: auto;
   padding: 0;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.1),
     0 4px 12px rgba(0, 0, 0, 0.15),
     0 10px 30px rgba(0, 0, 0, 0.1);
-  background-color: #C9CBCD;
-  color: #333333;
+  background: var(--light);
+  color: var(--text-primary);
   position: relative;
-  overflow-x: hidden; /* 隐藏水平方向溢出 */
-  overflow-y: auto; /* 垂直方向可滚动 */
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  resize: none; /* 确保不能调整大小 */
-  box-sizing: border-box; /* 确保padding和border包含在宽高中 */
+  resize: none;
+  box-sizing: border-box;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body {
+  background: #ffffff;
+  color: #333333;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 /* 搜索框样式 - 与 popup.html 一致 */
@@ -27,12 +37,14 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 10px 0 10px 5px;
-  background-color: white;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--glass-border);
   flex-shrink: 0; /* 固定高度，不随内容变化 */
   z-index: 2; /* 确保搜索框始终在最上层 */
+  transition: all 0.3s ease;
 }
 
 .search-container > *:last-child {
@@ -46,27 +58,40 @@ body {
   vertical-align: middle;
   justify-content: center;
   opacity: 0.7;
+  filter: invert(1);
+}
+
+[data-theme="light"] #magnifying-glass {
+  filter: invert(0);
 }
 
 #search-input {
   flex-grow: 1;
   margin: 0 10px;
-  padding: 5px;
+  padding: 8px;
   vertical-align: middle;
   justify-content: center;
   border: none;
   outline: none;
   background-color: transparent;
   font-size: 14px;
+  color: var(--text-primary);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+#search-input::placeholder {
+  color: var(--text-muted);
 }
 
 #tab-count {
   margin-right: 10px;
   font-weight: bold;
-  color: #4285f4;
+  color: var(--primary-light);
   font-size: 14px;
   text-align: right;
+  transition: color 0.3s ease;
 }
 
 /* 新增：标签列表容器，用于实现独立滚动 */
@@ -87,9 +112,12 @@ body {
   margin: 0;
   overflow-y: auto; /* 垂直滚动 */
   flex: 1; /* 占据容器全部空间 */
-  background-color: white;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   width: 100%; /* 确保不超出父容器宽度 */
   box-sizing: border-box; /* 确保padding和border包含在宽度内 */
+  transition: background 0.3s ease;
 }
 
 #pinned-tab-list::-webkit-scrollbar {
@@ -97,17 +125,18 @@ body {
 }
 
 #pinned-tab-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--glass-border);
   border-radius: 4px;
 }
 
 #pinned-tab-list::-webkit-scrollbar-thumb {
-  background: rgba(136, 136, 136, 0.4);
+  background: var(--text-muted);
   border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 #pinned-tab-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(136, 136, 136, 0.6);
+  background: var(--text-secondary);
 }
 
 #pinned-tab-list li {
@@ -117,36 +146,50 @@ body {
   cursor: pointer;
   padding: 10px 5px 10px 10px;
   margin: 0;
-  background-color: white;
+  background: var(--glass-bg);
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   width: 100%; /* 确保不超出父容器宽度 */
   box-sizing: border-box; /* 确保padding和border包含在宽度内 */
   max-width: 100%; /* 防止内容溢出 */
   overflow: hidden; /* 防止内容溢出 */
   position: relative;
+  border-bottom: 1px solid var(--glass-border);
 }
 
 #pinned-tab-list li:hover {
-  background-color: #E6E6E6;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--primary);
+}
+
+[data-theme="light"] #pinned-tab-list li:hover {
+  background: #f5f5f5;
+  border-color: var(--primary);
 }
 
 #pinned-tab-list li.selected {
-  background-color: #D3E3FD;
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--primary);
 }
 
-/* 长期固定Tab的底色 */
+[data-theme="light"] #pinned-tab-list li.selected {
+  background: #e8eaf6;
+  border-color: var(--primary);
+}
+
+/* 长期固定 Tab 的底色 */
 #pinned-tab-list li.long-term-pinned {
-  background-color: #E8E0F0;
+  background: rgba(139, 92, 246, 0.15);
 }
 
 #pinned-tab-list li.long-term-pinned:hover {
-  background-color: #DDD5E8;
+  background: rgba(139, 92, 246, 0.25);
 }
 
-/* 长期固定Tab被选中时的底色（更深的紫色） */
+/* 长期固定 Tab 被选中时的底色（更深的紫色） */
 #pinned-tab-list li.long-term-pinned.selected {
-  background-color: #D0C4E3;
+  background: rgba(139, 92, 246, 0.35);
 }
 
 /* 操作按钮容器 */
@@ -190,7 +233,7 @@ body {
   height: 24px;
   display: flex;
   align-items: center;
-  color: #5f6368;
+  color: var(--text-secondary);
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -243,7 +286,11 @@ body {
 
 /* 操作按钮悬停效果 */
 #pinned-tab-list .action-btn:hover {
-  background-color: #f0f0f0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] #pinned-tab-list .action-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 /* 取消固定按钮特殊样式 */
@@ -262,15 +309,15 @@ body {
 
 /* 长期固定按钮样式 */
 #pinned-tab-list .action-btn.longterm-btn {
-  color: #5f6368;
+  color: var(--text-secondary);
 }
 
 #pinned-tab-list .action-btn.longterm-btn:hover {
-  color: #1a73e8;
+  color: var(--primary);
 }
 
 #pinned-tab-list .action-btn.longterm-btn.active {
-  color: #1a73e8;
+  color: var(--primary);
 }
 
 .li-icon {
@@ -284,22 +331,28 @@ body {
   width: auto;
   white-space: normal; /* 允许文本换行 */
   font-size: 14px;
-  color: #202124;
+  color: var(--text-primary);
   flex: 1; /* 占据可用空间，但不超过容器 */
   min-width: 0; /* 允许flex项目收缩到内容的固有大小以下 */
   word-wrap: break-word; /* 允许长单词换行 */
   overflow-wrap: break-word; /* 允许长内容换行 */
+  transition: color 0.3s ease;
 }
 
 .tab-title .highlight {
-  background-color: #FFE792;
-  color: #000;
-  padding: 0 1px;
-  border-radius: 2px;
+  background: var(--primary);
+  color: white;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+[data-theme="light"] .tab-title .highlight {
+  background: var(--primary-light);
+  color: white;
 }
 
 .tab-url-hostname {
-  color: #5f6368;
+  color: var(--text-secondary);
   font-size: 12px;
   margin-top: 3px;
   white-space: nowrap; /* 不换行 */
@@ -309,6 +362,7 @@ body {
   width: auto;
   flex: 1; /* 占据可用空间，但不超过容器 */
   min-width: 0; /* 允许flex项目收缩到内容的固有大小以下 */
+  transition: color 0.3s ease;
 }
 
 .li-item {
@@ -325,39 +379,52 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
-  padding: 2px 20px;
-  background-color: white;
-  border-top: 1px solid #e0e0e0;
+  padding: 8px 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
   flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
 .icon-btn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
-  border-radius: 4px;
+  padding: 8px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
-  color: #5f6368;
+  transition: all 0.3s ease;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .icon-btn:hover {
-  background-color: #f0f0f0;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+[data-theme="light"] .icon-btn:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
 }
 
 .icon-btn:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+  box-shadow: 0 0 0 2px var(--primary-light);
 }
 
 /* Empty state */
 .empty-state {
   text-align: center;
   padding: 40px 20px;
-  color: #666;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 .empty-state-icon {
@@ -382,15 +449,19 @@ body {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #323232;
-  color: white;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
   padding: 12px 24px;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 14px;
   z-index: 10000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--glass-shadow);
   opacity: 0;
   animation: toast-in 0.3s ease forwards;
+  transition: all 0.3s ease;
 }
 
 @keyframes toast-in {

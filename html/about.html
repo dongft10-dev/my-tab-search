@@ -4,104 +4,287 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - MyTabSearch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      --accent: #14b8a6;
+      --dark: #0f0f1a;
+      --darker: #080810;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-bg-solid: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.5);
+      --bg-primary: transparent;
+      --bg-secondary: transparent;
+      --bg-tertiary: transparent;
+      --card-bg: var(--glass-bg);
+      --card-bg-solid: transparent;
+      --header-bg: rgba(8, 8, 16, 0.7);
+      --footer-bg: rgba(8, 8, 16, 0.8);
+      --hero-gradient: 
+          radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, rgba(20, 184, 166, 0.15) 0%, transparent 60%),
+          linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+      --hero-bg: transparent;
+      --carousel-bg: var(--glass-bg);
+      --section-bg: transparent;
+      
+      /* Aurora gradients for light theme */
+      --aurora-1: rgba(99, 102, 241, 0.12);
+      --aurora-2: rgba(236, 72, 153, 0.1);
+      --aurora-3: rgba(20, 184, 166, 0.08);
+      --aurora-4: rgba(245, 158, 11, 0.08);
+    }
+
+    /* Glassmorphism Light Theme - Vibrant Pastel Aurora */
+    [data-theme="light"] {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      
+      /* Enhanced glass effect with stronger blur */
+      --glass-bg: rgba(255, 255, 255, 0.35);
+      --glass-bg-solid: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+      
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      
+      /* Soft aurora background */
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-tertiary: #e2e8f0;
+      --card-bg: rgba(255, 255, 255, 0.5);
+      --card-bg-solid: rgba(255, 255, 255, 0.7);
+      --header-bg: rgba(248, 250, 252, 0.7);
+      --footer-bg: rgba(241, 245, 249, 0.8);
+      
+      /* Aurora gradient background */
+      --hero-gradient: 
+          radial-gradient(120% 80% at 0% 0%, rgba(255, 182, 193, 0.6) 0%, transparent 50%),
+          radial-gradient(120% 80% at 100% 0%, rgba(173, 216, 230, 0.5) 0%, transparent 50%),
+          radial-gradient(120% 80% at 50% 100%, rgba(221, 160, 221, 0.5) 0%, transparent 50%),
+          linear-gradient(180deg, #e0f2fe 0%, #fdf4ff 50%, #fef3c7 100%);
+      --hero-bg: transparent;
+      --carousel-bg: rgba(255, 255, 255, 0.5);
+      --section-bg: rgba(255, 255, 255, 0.3);
+      
+      /* Aurora animations */
+      --aurora-1: rgba(99, 102, 241, 0.2);
+      --aurora-2: rgba(236, 72, 153, 0.15);
+      --aurora-3: rgba(20, 184, 166, 0.12);
+      --aurora-4: rgba(245, 158, 11, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       max-width: 600px;
       margin: 40px auto;
       padding: 20px;
-      background-color: #f5f5f5;
+      background: var(--dark);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
+
+    [data-theme="light"] body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
     .container {
-      background-color: white;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
       padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: var(--glass-shadow);
+      transition: all 0.3s ease;
     }
+
+    [data-theme="light"] .container {
+      background: var(--card-bg);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 18px;
+      box-shadow: var(--glass-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+
     h1 {
-      color: #4285f4;
-      border-bottom: 2px solid #eee;
+      color: var(--primary);
+      border-bottom: 1px solid var(--glass-border);
       padding-bottom: 10px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
     }
+
+    h3 {
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+
     .logo {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .logo img {
       width: 64px;
       height: 64px;
+      transition: all 0.3s ease;
     }
+
     .info-section {
       margin: 20px 0;
     }
+
     .version-info {
-      background-color: #f9f9f9;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
       padding: 10px;
-      border-radius: 4px;
+      border-radius: 8px;
       font-weight: bold;
+      transition: all 0.3s ease;
     }
+
     .description {
       line-height: 1.6;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
     }
+
     .features {
       margin: 20px 0;
     }
+
     .features ul, .shortcuts ul {
       padding-left: 20px;
     }
+
     .features li, .shortcuts li {
       margin: 8px 0;
       line-height: 1.5;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
     }
+
     .usage-tips ul {
       padding-left: 20px;
     }
+
     .usage-tips li {
       margin: 12px 0;
       line-height: 1.5;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
     }
+
     .footer {
       margin-top: 30px;
       text-align: center;
-      color: #666;
+      color: var(--text-muted);
       font-size: 0.9em;
+      transition: all 0.3s ease;
     }
+
     .shortcut-setup {
-      background-color: #e8f0fe;
-      border: 1px solid #d2e3fc;
-      border-radius: 6px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
       padding: 15px;
       margin: 20px 0;
+      transition: all 0.3s ease;
     }
+
     .shortcut-setup h4 {
       margin: 0 0 10px 0;
-      color: #1a73e8;
+      color: var(--primary);
+      transition: all 0.3s ease;
     }
+
     .shortcut-setup p {
       margin: 8px 0;
       font-size: 0.9em;
-      color: #444;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
     }
+
     .shortcut-setup .shortcut-item {
       font-weight: bold;
-      color: #1a73e8;
+      color: var(--primary);
+      transition: all 0.3s ease;
     }
+
     .btn-setup-shortcut {
-      background-color: #1a73e8;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 14px;
       margin-top: 10px;
+      transition: all 0.3s ease;
+      box-shadow: var(--glass-shadow);
     }
+
     .btn-setup-shortcut:hover {
-      background-color: #1557b0;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-setup-shortcut:active {
+      transform: translateY(0);
+      box-shadow: var(--glass-shadow);
     }
   </style>
 </head>
-<body>
+<body data-theme="light">
+  <button id="theme-toggle" class="theme-toggle">
+    <i class="fas fa-moon"></i>
+  </button>
   <div class="container">
     <div class="logo">
       <img src="../images/icon-128.png" alt="MyTabSearch Logo">

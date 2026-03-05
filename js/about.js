@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error('Error loading manifest:', error);
     });
 
+  // Initialize theme
+  initializeTheme();
+
   // Add keyboard shortcut setup button handler
   const setupBtn = document.getElementById('btn-setup-shortcut');
   if (setupBtn) {
@@ -29,6 +32,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Open Chrome keyboard shortcuts settings page
       chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
     });
+  }
+
+  // Add theme toggle button handler
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
   }
 
   // Add language change listener
@@ -45,6 +54,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
+
+// Initialize theme
+function initializeTheme() {
+  // Get theme from local storage, default to light theme
+  chrome.storage.local.get('theme', (result) => {
+    const theme = result.theme || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeToggleIcon(theme);
+  });
+}
+
+// Update theme toggle icon
+function updateThemeToggleIcon(theme) {
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.innerHTML = theme === 'light' ? 
+      '<i class="fas fa-moon"></i>' : 
+      '<i class="fas fa-sun"></i>';
+  }
+}
+
+// Toggle theme
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  updateThemeToggleIcon(newTheme);
+  
+  // Save theme to local storage
+  chrome.storage.local.set({ theme: newTheme });
+}
 
 function applyI18n() {
   // Update page title

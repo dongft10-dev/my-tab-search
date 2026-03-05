@@ -7,11 +7,17 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--dark);
+  color: var(--text-primary);
   line-height: 1.5;
   min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .settings-container {
@@ -21,20 +27,34 @@ body {
 }
 
 .settings-section {
-  background: #fff;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s ease;
 }
 
 .settings-section h2 {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .settings-section {
+  background: var(--card-bg);
+  box-shadow: var(--glass-shadow);
+}
+
+[data-theme="light"] .settings-section h2 {
+  border-bottom-color: var(--glass-border);
 }
 
 /* 账户信息 */
@@ -53,13 +73,14 @@ body {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-size: 24px;
   font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .account-details {
@@ -69,34 +90,38 @@ body {
 .account-email {
   font-size: 16px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 4px;
+  transition: all 0.3s ease;
 }
 
 .account-status {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
 }
 
 /* VIP 徽章 */
 .vip-badge {
   display: inline-block;
   padding: 2px 8px;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
   border-radius: 4px;
   margin-left: 8px;
+  transition: all 0.3s ease;
 }
 
 /* VIP 状态 */
 .vip-status {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
   color: #fff;
+  transition: all 0.3s ease;
 }
 
 .vip-info {
@@ -122,11 +147,12 @@ body {
 
 /* 体验期状态 */
 .trial-status {
-  background: #fff7e6;
-  border: 1px solid #ffd591;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
+  transition: all 0.3s ease;
 }
 
 .trial-info {
@@ -142,62 +168,73 @@ body {
 
 .trial-label {
   font-size: 14px;
-  color: #d46b08;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
 }
 
 .trial-value {
   font-size: 14px;
   font-weight: 600;
-  color: #d46b08;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 /* 登录/注册按钮 */
 .btn-login {
   width: 100%;
   padding: 12px 20px;
-  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: var(--glass-shadow);
 }
 
 .btn-login:hover {
-  background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
   transform: translateY(-1px);
 }
 
 .btn-login:active {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3);
+  box-shadow: var(--glass-shadow);
 }
 
 .btn-trial-extend {
   width: 100%;
   padding: 10px;
   margin-top: 12px;
-  background: #fa8c16;
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: var(--glass-shadow);
 }
 
 .btn-trial-extend:hover {
-  background: #faad14;
+  background: var(--primary-light);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-trial-extend:active {
+  transform: translateY(0);
+  box-shadow: var(--glass-shadow);
 }
 
 .btn-trial-extend:disabled {
-  background: #ccc;
+  background: var(--glass-border);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* 账户操作 */
@@ -209,19 +246,28 @@ body {
 .btn-logout {
   flex: 1;
   padding: 10px 16px;
-  background: #fff;
-  color: #ff4d4f;
-  border: 1px solid #ff4d4f;
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: var(--glass-shadow);
 }
 
 .btn-logout:hover {
-  background: #ff4d4f;
+  background: var(--secondary);
   color: #fff;
+  border-color: var(--secondary);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
+  box-shadow: var(--glass-shadow);
 }
 
 /* 设备列表 */
@@ -236,8 +282,11 @@ body {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: #fafafa;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: var(--glass-shadow);
 }
 
 .device-icon {
@@ -246,9 +295,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e6f7ff;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 8px;
   font-size: 20px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 .device-info {
@@ -258,12 +310,14 @@ body {
 .device-name {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 .device-meta {
   font-size: 12px;
-  color: #999;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
 }
 
 .device-meta span {
@@ -273,11 +327,12 @@ body {
 .current-badge {
   display: inline-block;
   padding: 2px 6px;
-  background: #52c41a;
+  background: var(--primary);
   color: white;
   border-radius: 4px;
   font-size: 10px;
   margin-left: 8px;
+  transition: all 0.3s ease;
 }
 
 .btn-remove-device {
@@ -285,36 +340,40 @@ body {
   height: 28px;
   border: none;
   background: transparent;
-  color: #999;
+  color: var(--text-secondary);
   cursor: pointer;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .btn-remove-device:hover {
-  background: #ff4d4f;
+  background: var(--secondary);
   color: white;
+  transform: scale(1.1);
 }
 
 .empty-text {
   text-align: center;
-  color: #999;
+  color: var(--text-secondary);
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
 .error-text {
   text-align: center;
-  color: #ff4d4f;
+  color: var(--secondary);
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
 .loading-text {
   text-align: center;
-  color: #999;
+  color: var(--text-secondary);
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
 /* 语言设置 / 搜索规则设置 */
@@ -331,40 +390,46 @@ body {
 
 .setting-item label {
   font-size: 14px;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .setting-item select {
   padding: 8px 12px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--glass-border);
   border-radius: 6px;
   font-size: 14px;
   min-width: 200px;
   max-width: 280px;
   cursor: pointer;
-  background: #fff;
-  transition: all 0.2s;
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  box-shadow: var(--glass-shadow);
 }
 
 .setting-item select:hover {
-  border-color: #40a9ff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
 }
 
 .setting-item select:focus {
   outline: none;
-  border-color: #40a9ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
 .setting-description {
   font-size: 12px;
-  color: #999;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-top: 8px;
   padding: 10px 12px;
-  background: #fafafa;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 /* 关于 */
@@ -375,13 +440,15 @@ body {
 
 .about-info p {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 4px;
+  transition: all 0.3s ease;
 }
 
 .about-desc {
   font-size: 12px;
-  color: #999;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
 }
 
 /* 状态消息 */
@@ -396,6 +463,11 @@ body {
   display: none;
   z-index: 1000;
   animation: slideUp 0.3s ease;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
 }
 
 .status-message.show {
@@ -403,17 +475,17 @@ body {
 }
 
 .status-message.success {
-  background: #52c41a;
+  background: rgba(82, 196, 26, 0.9);
   color: #fff;
 }
 
 .status-message.error {
-  background: #ff4d4f;
+  background: rgba(255, 77, 79, 0.9);
   color: #fff;
 }
 
 .status-message.info {
-  background: #1890ff;
+  background: rgba(99, 102, 241, 0.9);
   color: #fff;
 }
 
